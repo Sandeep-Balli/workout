@@ -1,6 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
+const cors = require('cors');
 
 const workoutRoutes = require('./routes/workout')
 
@@ -8,11 +9,17 @@ const workoutRoutes = require('./routes/workout')
 const app = express();
 
 // middleware
+app.use(cors({origin: true, credentials: true}));
 app.use(express.json())
+// app.use((req, res, next) => {
+//     console.log(req.path, req.method);
+//     next();
+// })
+
 app.use((req, res, next) => {
-    console.log(req.path, req.method);
+    res.header({"Access-Control-Allow-Origin": "*"});
     next();
-})
+  }) 
 
 // routes
 
